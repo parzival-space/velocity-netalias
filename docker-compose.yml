@@ -1,0 +1,17 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    environment:
+      TYPE: "PAPER"
+      EULA: "TRUE"
+      ONLINE_MODE: "FALSE"
+    volumes:
+      - ./.docker/minecraft:/data
+  velocity:
+    image: itzg/mc-proxy
+    environment:
+      TYPE: "VELOCITY"
+    ports:
+      - "25565:25577"
+    volumes:
+      - ./.docker/velocity:/server
