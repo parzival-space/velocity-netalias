@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Build &amp; Run Proxy" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+    <deployment type="docker-compose.yml">
+      <settings>
+        <option name="envFilePath" value="" />
+        <option name="sourceFilePath" value="docker-compose.yml" />
+        <option name="upDetach" value="false" />
+      </settings>
+    </deployment>
+    <method v="2">
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="package" />
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Create Plugins Directory" />
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Clear Plugin Directory" />
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_Copy Build Artifacts" />
+    </method>
+  </configuration>
+</component>
