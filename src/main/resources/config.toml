@@ -1,0 +1,4 @@
+aliases = [
+    { name = "lobby", args = "", command = "server", commandArgs = "lobby" },
+    { name = "s", args = "(\\S*)", command = "server", commandArgs = "$1" }
+]
