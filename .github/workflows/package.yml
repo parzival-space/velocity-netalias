@@ -5,7 +5,7 @@ jobs:
     uses: ./.github/workflows/get-version.yml
 
   package_jar:
-    name: "Create Linux Artifacts"
+    name: "Create Artifacts"
     needs: [ get_version ]
     runs-on: ubuntu-latest
     steps:
@@ -23,6 +23,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
-          path: |
-            ./target/*.jar
-            ./src/main/resources/*.toml
+          path: ./target/*.jar
