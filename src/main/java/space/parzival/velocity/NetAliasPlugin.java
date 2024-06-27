@@ -30,11 +30,13 @@ import java.util.List;
         authors = { "Parzival" }
 )
 public class NetAliasPlugin {
-    private final AliasCommandManager aliasCommandManager;
     private final Path dataDirectory;
 
     @Getter
     private final CommandManager commandManager;
+
+    @Getter
+    private final AliasCommandManager aliasCommandManager;
 
     @Getter
     private final ProxyServer proxyServer;

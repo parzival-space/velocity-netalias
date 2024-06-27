@@ -1,9 +1,8 @@
 package space.parzival.velocity;
 
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.SimpleCommand;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.kyori.adventure.text.Component;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
@@ -12,7 +11,8 @@ import java.util.regex.Pattern;
 
 @Slf4j
 public class AliasCommandManager {
-    private final HashMap<String, Command> aliasCommands = new HashMap<>();
+    @Getter
+    private final HashMap<String, String> registeredAliases = new HashMap<>();
 
     public void registerAlias(String aliasName, String aliasArgs, String commandName, String commandArgs) {
         SimpleCommand virtualCommand = new SimpleCommand() {
@@ -44,16 +44,16 @@ public class AliasCommandManager {
         };
 
         NetAliasPlugin.getInstance().getCommandManager().register(aliasName, virtualCommand);
-        this.aliasCommands.put(aliasName, virtualCommand);
+        this.registeredAliases.put(aliasName, commandName + (commandArgs.isEmpty() ? "" : " " + commandArgs));
         log.info("Registered alias command '{}'", aliasName);
     }
 
     public void unregisterAliases() {
-        this.aliasCommands.forEach((key, value) -> {
+        this.registeredAliases.forEach((key, value) -> {
             NetAliasPlugin.getInstance().getCommandManager().unregister(key);
             log.info("Unregistered alias command '{}'", key);
         });
-        this.aliasCommands.clear();
+        this.registeredAliases.clear();
     }
 
 }
