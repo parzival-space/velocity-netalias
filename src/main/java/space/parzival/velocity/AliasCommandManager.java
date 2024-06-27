@@ -7,6 +7,8 @@ import net.kyori.adventure.text.Component;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class AliasCommandManager {
@@ -17,10 +19,27 @@ public class AliasCommandManager {
             @Override
             public void execute(Invocation invocation) {
                 String joinedArguments = String.join(" ", invocation.arguments());
-                String newCommandArguments = aliasArgs.isEmpty() ? "" : (" " + joinedArguments.replaceAll(aliasArgs, commandArgs));
+                String newCommandArguments = "";
+
+                if (!aliasArgs.isEmpty() && !joinedArguments.isEmpty()) {
+                    Pattern pattern = Pattern.compile(aliasArgs);
+                    Matcher matcher = pattern.matcher(joinedArguments);
+
+                    StringBuilder result = new StringBuilder();
+                    while (matcher.find()) {
+                        String replacement = commandArgs;
+                        for (int i = 1; i <= matcher.groupCount(); i++) {
+                            replacement = replacement.replace("$" + i, matcher.group(i));
+                        }
+                        matcher.appendReplacement(result, replacement);
+                    }
+                    matcher.appendTail(result);
+
+                    newCommandArguments = result.toString();
+                }
 
                 CompletableFuture<Boolean> executionResult = NetAliasPlugin.getInstance().getCommandManager()
-                        .executeImmediatelyAsync(invocation.source(), commandName + " " + newCommandArguments);
+                        .executeImmediatelyAsync(invocation.source(), commandName + (newCommandArguments.isEmpty() ? "" : " " + newCommandArguments));
             }
         };
 
